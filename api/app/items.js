@@ -29,6 +29,8 @@ router.get('/', async (req, res, next) => {
 
 router.get('/:id', async (req, res, next) => {
     try {
+        if( !mongoose.Types.ObjectId.isValid(req.params.id)) return false;
+
         const item = await Item.findById(req.params.id).populate('user', '_id email displayName phoneNumber').populate('category');
         return res.send(item);
     } catch (error) {

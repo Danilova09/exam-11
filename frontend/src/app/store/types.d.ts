@@ -16,6 +16,8 @@ export type ItemsState = {
   item: null | Item,
   itemLoading: boolean,
   itemError: null | string,
+  createLoading: boolean,
+  createError: null | string,
 }
 
 export type AppState = {

@@ -1,6 +1,9 @@
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { ItemsService } from '../services/items.service';
 import {
+  createItemFailure,
+  createItemRequest,
+  createItemSuccess,
   fetchItemsFailure,
   fetchItemsRequest,
   fetchItemsSuccess,
@@ -10,12 +13,14 @@ import {
 } from './items.actions';
 import { catchError, map, mergeMap, of, tap } from 'rxjs';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class ItemsEffects {
   constructor(
     private actions: Actions,
     private itemsService: ItemsService,
+    private router: Router,
   ) {}
 
   fetchItems = createEffect(() => this.actions.pipe(
@@ -35,6 +40,16 @@ export class ItemsEffects {
       catchError(() => of(getItemFailure({
         error: 'Something went wrong'
       })))
+    ))
+  ));
+
+  createItem = createEffect(() => this.actions.pipe(
+    ofType(createItemRequest),
+    mergeMap(({itemData}) => this.itemsService.createItem(itemData).pipe(
+      tap((item) => console.log(item)),
+      map(() => createItemSuccess()),
+      tap(() => this.router.navigate(['/'])),
+      catchError(() => of(createItemFailure({error: 'Wrong data'})))
     ))
   ));
 }

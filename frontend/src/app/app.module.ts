@@ -29,6 +29,8 @@ import { ItemsEffects } from './store/items.effects';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ImagePipe } from './pipes/image.pipe';
 import { ItemDetailsComponent } from './pages/item-details/item-details.component';
+import { NewItemComponent } from './pages/new-item/new-item.component';
+import { FileInputComponent } from './ui/file-input/file-input.component';
 
 const localStorageSyncReducer = (reducer: ActionReducer<any>) => {
   return localStorageSync({
@@ -40,16 +42,18 @@ const localStorageSyncReducer = (reducer: ActionReducer<any>) => {
 const metaReducers: MetaReducer[] = [localStorageSyncReducer];
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    NavigationComponent,
-    LoginComponent,
-    RegisterComponent,
-    ItemsComponent,
-    CenteredCardComponent,
-    ImagePipe,
-    ItemDetailsComponent,
-  ],
+    declarations: [
+        AppComponent,
+        NavigationComponent,
+        LoginComponent,
+        RegisterComponent,
+        ItemsComponent,
+        CenteredCardComponent,
+        ImagePipe,
+        ItemDetailsComponent,
+        NewItemComponent,
+        FileInputComponent,
+    ],
   imports: [
     BrowserModule,
     AppRoutingModule,

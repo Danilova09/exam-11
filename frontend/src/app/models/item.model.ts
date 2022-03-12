@@ -10,3 +10,13 @@ export interface Item {
   image: string,
   price: number,
 }
+
+export interface ItemData {
+  [key: string]: any;
+  user: string | undefined,
+  category: string,
+  title: string,
+  description: string,
+  image: File,
+  price: number,
+}
