@@ -12,7 +12,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
-import { FlexModule } from '@angular/flex-layout';
+import { ExtendedModule, FlexModule } from '@angular/flex-layout';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { usersReducer } from './store/users.reducer';
@@ -72,6 +72,7 @@ const metaReducers: MetaReducer[] = [localStorageSyncReducer];
     MatInputModule,
     MatCardModule,
     MatProgressSpinnerModule,
+    ExtendedModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

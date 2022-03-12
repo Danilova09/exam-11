@@ -1,16 +1,21 @@
-<div *ngIf="(loading | async) else itemsBlock" fxLayout="row" fxLayoutAlign="center center" style="margin-top: 50px;">
-  <mat-spinner></mat-spinner>
+<div class="loading-block" style="display: flex; justify-content: center; align-items: center;"
+     *ngIf="(loading | async) else itemsArea">
+  <mat-spinner color="primary" style="margin-top: 50px;"></mat-spinner>
 </div>
-<ng-template #itemsBlock>
-  <div class="items-block">
-    <mat-card *ngFor="let post of (items | async)" [routerLink]="['post-details/']">
-      <mat-card-content fxLayout="row" fxLayoutAlign="flex-start">
-        <img mat-card-md-image [alt]="post.title" [src]="post.image | image">
-        <div style="margin-left: 20px;">
-          <p>Datetime: {{ post.title }}, by <strong></strong></p>
-          <p>{{ post.title }}</p>
-        </div>
+<ng-template #itemsArea>
+  <div fxLayoutAlign="center center" fxLayout.xs="column" fxLayout="row wrap" fxLayoutGap="15px" ngClass.gt-xs="ml-15" style="padding: 50px">
+    <mat-card style="cursor: pointer;" [routerLink]="['/item-details']" [queryParams]="{ itemId: item._id }"
+              *ngFor="let item of (items | async)" fxFlex.sm="0 1 calc(50%-15px)" fxFlex.md="0 1 calc(33%-15px)"
+              fxFlex.gt-md="0 1 calc(25%-15px)">
+      <img mat-card-image [src]="item.image | image" [alt]="item.title">
+      <mat-card-content>
+        <mat-card-title>{{ item.title }}</mat-card-title>
+        <mat-card-title>{{ item.price }}</mat-card-title>
       </mat-card-content>
+      <mat-card-actions>
+        <button mat-button>LIKE</button>
+        <button mat-button>SHARE</button>
+      </mat-card-actions>
     </mat-card>
   </div>
 </ng-template>
