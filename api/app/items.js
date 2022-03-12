@@ -27,6 +27,15 @@ router.get('/', async (req, res, next) => {
     }
 });
 
+router.get('/:id', async (req, res, next) => {
+    try {
+        const item = await Item.findById(req.params.id).populate('user', '_id email displayName phoneNumber').populate('category');
+        return res.send(item);
+    } catch (error) {
+        next(error);
+    }
+});
+
 router.post('/', upload.single('image'), async (req, res, next) => {
     try {
         if (!req.file) {

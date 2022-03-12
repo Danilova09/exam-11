@@ -13,6 +13,9 @@ export type ItemsState = {
   items: Item[],
   fetchLoading: boolean,
   fetchError: null | string,
+  item: null | Item,
+  itemLoading: boolean,
+  itemError: null | string,
 }
 
 export type AppState = {

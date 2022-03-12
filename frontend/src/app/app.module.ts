@@ -28,6 +28,7 @@ import { itemsReducer } from './store/items.reducer';
 import { ItemsEffects } from './store/items.effects';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ImagePipe } from './pipes/image.pipe';
+import { ItemDetailsComponent } from './pages/item-details/item-details.component';
 
 const localStorageSyncReducer = (reducer: ActionReducer<any>) => {
   return localStorageSync({
@@ -47,6 +48,7 @@ const metaReducers: MetaReducer[] = [localStorageSyncReducer];
     ItemsComponent,
     CenteredCardComponent,
     ImagePipe,
+    ItemDetailsComponent,
   ],
   imports: [
     BrowserModule,

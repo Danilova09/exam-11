@@ -1,0 +1,9 @@
+<app-centered-card title="{{ (item | async)?.title }}">
+  <img mat-card-xl-image [src]="(item | async)?.image | image" [alt]="(item | async)?.title">
+  <mat-card-content style="margin-top: 30px;">
+    <p>Description: {{ (item | async)?.description }}</p>
+    <p>Price: {{ (item | async)?.price }}</p>
+    <p>Category: {{ (item | async)?.category?.categoryName }} </p>
+    <p>Salesman: {{ (item | async)?.user?.displayName }} (phone: {{ (item | async)?.user?.phoneNumber }}) </p>
+  </mat-card-content>
+</app-centered-card>
