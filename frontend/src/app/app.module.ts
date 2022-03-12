@@ -24,6 +24,10 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { CenteredCardComponent } from './ui/centered-card/centered-card.component';
 import { MatCardModule } from '@angular/material/card';
+import { itemsReducer } from './store/items.reducer';
+import { ItemsEffects } from './store/items.effects';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { ImagePipe } from './pipes/image.pipe';
 
 const localStorageSyncReducer = (reducer: ActionReducer<any>) => {
   return localStorageSync({
@@ -42,6 +46,7 @@ const metaReducers: MetaReducer[] = [localStorageSyncReducer];
     RegisterComponent,
     ItemsComponent,
     CenteredCardComponent,
+    ImagePipe,
   ],
   imports: [
     BrowserModule,
@@ -57,13 +62,16 @@ const metaReducers: MetaReducer[] = [localStorageSyncReducer];
     MatSnackBarModule,
     StoreModule.forRoot({
       users: usersReducer,
+      items: itemsReducer,
     }, {metaReducers}),
     EffectsModule.forRoot([
       UsersEffects,
+      ItemsEffects,
     ]),
     MatFormFieldModule,
     MatInputModule,
     MatCardModule,
+    MatProgressSpinnerModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

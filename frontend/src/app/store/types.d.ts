@@ -1,4 +1,5 @@
 import { LoginError, RegisterError, User } from '../models/user.model';
+import { Item } from '../models/item.model';
 
 export type UsersState = {
   user: null | User,
@@ -8,6 +9,13 @@ export type UsersState = {
   loginError: null | LoginError,
 }
 
+export type ItemsState = {
+  items: Item[],
+  fetchLoading: boolean,
+  fetchError: null | string,
+}
+
 export type AppState = {
   users: UsersState,
+  items: ItemsState,
 }

@@ -1,1 +1,16 @@
-<p>items works!</p>
+<div *ngIf="(loading | async) else itemsBlock" fxLayout="row" fxLayoutAlign="center center" style="margin-top: 50px;">
+  <mat-spinner></mat-spinner>
+</div>
+<ng-template #itemsBlock>
+  <div class="items-block">
+    <mat-card *ngFor="let post of (items | async)" [routerLink]="['post-details/']">
+      <mat-card-content fxLayout="row" fxLayoutAlign="flex-start">
+        <img mat-card-md-image [alt]="post.title" [src]="post.image | image">
+        <div style="margin-left: 20px;">
+          <p>Datetime: {{ post.title }}, by <strong></strong></p>
+          <p>{{ post.title }}</p>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</ng-template>
