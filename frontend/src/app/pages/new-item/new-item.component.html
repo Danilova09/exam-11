@@ -26,9 +26,19 @@
           Enter price please, more then 0!
         </mat-error>
       </mat-form-field>
+      <mat-form-field appearance="outline" >
+        <mat-label>Categories</mat-label>
+        <select name="category" #category="ngModel" ngModel matNativeControl required>
+          <option value="" selected>Select category</option>
+          <option *ngFor="let category of (categories | async)" [value]="category._id">{{ category.categoryName }}</option>
+        </select>
+        <mat-error *ngIf="category.touched && category.hasError('required')">
+          Choose category!
+        </mat-error>
+      </mat-form-field>
       <mat-form-field appearance="outline">
         <mat-label>Image</mat-label>
-        <app-file-input name="image" #image="ngModel" id="image" ngModel></app-file-input>
+        <app-file-input name="image" #image="ngModel" id="image" required ngModel></app-file-input>
       </mat-form-field>
       <button mat-raised-button color="primary">ADD ITEM</button>
     </form>

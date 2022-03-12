@@ -3,7 +3,11 @@ import { ItemsService } from '../services/items.service';
 import {
   createItemFailure,
   createItemRequest,
-  createItemSuccess,
+  createItemSuccess, deleteItemFailure,
+  deleteItemRequest, deleteItemSuccess,
+  fetchItemsByCategoryFailure,
+  fetchItemsByCategoryRequest,
+  fetchItemsByCategorySuccess,
   fetchItemsFailure,
   fetchItemsRequest,
   fetchItemsSuccess,
@@ -33,6 +37,16 @@ export class ItemsEffects {
     ))
   ));
 
+  fetchItemsByCategory = createEffect(() => this.actions.pipe(
+    ofType(fetchItemsByCategoryRequest),
+    mergeMap(({categoryId}) => this.itemsService.getItemsByCategory(categoryId).pipe(
+      map(items => fetchItemsByCategorySuccess({items})),
+      catchError(() => of(fetchItemsByCategoryFailure({
+        error: 'Something went wrong'
+      })))
+    ))
+  ));
+
   getItemById= createEffect(() => this.actions.pipe(
     ofType(getItemRequest),
     mergeMap(({itemId}) => this.itemsService.getItemById(itemId).pipe(
@@ -46,10 +60,17 @@ export class ItemsEffects {
   createItem = createEffect(() => this.actions.pipe(
     ofType(createItemRequest),
     mergeMap(({itemData}) => this.itemsService.createItem(itemData).pipe(
-      tap((item) => console.log(item)),
       map(() => createItemSuccess()),
       tap(() => this.router.navigate(['/'])),
       catchError(() => of(createItemFailure({error: 'Wrong data'})))
+    ))
+  ));
+
+  deleteItem = createEffect(() => this.actions.pipe(
+    ofType(deleteItemRequest),
+    mergeMap(({itemId}) => this.itemsService.deleteItem(itemId).pipe(
+      map(() => deleteItemSuccess()),
+      catchError(() => of(deleteItemFailure({error: 'Wrong data'})))
     ))
   ));
 }

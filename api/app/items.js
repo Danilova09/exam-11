@@ -20,6 +20,10 @@ const upload = multer({storage});
 
 router.get('/', async (req, res, next) => {
     try {
+        if (req.query.category) {
+            const items = await Item.find({category: req.query.category}).populate('user', '_id email displayName phoneNumber').populate('category');
+            return res.send(items);
+        }
         const items = await Item.find().populate('user', '_id email displayName phoneNumber').populate('category');
         return res.send(items);
     } catch (error) {
@@ -65,9 +69,10 @@ router.post('/', upload.single('image'), async (req, res, next) => {
     }
 });
 
-router.delete('/', async (req, res, next) => {
+router.delete('/:id', async (req, res, next) => {
     try {
-
+        console.log(req.params.id);
+        await Item.findById(req.params.id).deleteOne();
         return res.send({mesage: 'deleted'});
     } catch (e) {
         next(e);

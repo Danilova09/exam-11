@@ -29,10 +29,13 @@
       </mat-error>
     </mat-form-field>
     <mat-form-field appearance="outline">
-      <mat-label>Phone number</mat-label>
-      <input type="text" matInput required name="phoneNumber" #phoneNumber="ngModel" ngModel>
+      <mat-label>Phone number (+996)XXX-XXX-XXX)</mat-label>
+      <input type="text" matInput required name="phoneNumber" #phoneNumber="ngModel" appPhone ngModel>
       <mat-error *ngIf="phoneNumber.touched && phoneNumber.hasError('required')">
         Enter phone number!
+      </mat-error>
+      <mat-error *ngIf="phoneNumber.touched && phoneNumber.hasError('appPhone')">
+        Enter valid phone number!
       </mat-error>
     </mat-form-field>
     <button mat-raised-button color="primary" [disabled]="(loading | async)">REGISTER</button>

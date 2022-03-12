@@ -31,29 +31,35 @@ import { ImagePipe } from './pipes/image.pipe';
 import { ItemDetailsComponent } from './pages/item-details/item-details.component';
 import { NewItemComponent } from './pages/new-item/new-item.component';
 import { FileInputComponent } from './ui/file-input/file-input.component';
+import { categoriesReducer } from './store/categories.reducer';
+import { CategoriesEffects } from './store/categories.effects';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatListModule } from '@angular/material/list';
+import { ValidatePhoneDirective } from './validate-phone.directive';
 
 const localStorageSyncReducer = (reducer: ActionReducer<any>) => {
   return localStorageSync({
     keys: [{users: ['user']}],
     rehydrate: true
   })(reducer);
-}
+};
 
 const metaReducers: MetaReducer[] = [localStorageSyncReducer];
 
 @NgModule({
-    declarations: [
-        AppComponent,
-        NavigationComponent,
-        LoginComponent,
-        RegisterComponent,
-        ItemsComponent,
-        CenteredCardComponent,
-        ImagePipe,
-        ItemDetailsComponent,
-        NewItemComponent,
-        FileInputComponent,
-    ],
+  declarations: [
+    AppComponent,
+    NavigationComponent,
+    LoginComponent,
+    RegisterComponent,
+    ItemsComponent,
+    CenteredCardComponent,
+    ImagePipe,
+    ItemDetailsComponent,
+    NewItemComponent,
+    FileInputComponent,
+    ValidatePhoneDirective,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -69,18 +75,23 @@ const metaReducers: MetaReducer[] = [localStorageSyncReducer];
     StoreModule.forRoot({
       users: usersReducer,
       items: itemsReducer,
+      categories: categoriesReducer,
     }, {metaReducers}),
     EffectsModule.forRoot([
       UsersEffects,
       ItemsEffects,
+      CategoriesEffects,
     ]),
     MatFormFieldModule,
     MatInputModule,
     MatCardModule,
     MatProgressSpinnerModule,
     ExtendedModule,
+    MatSidenavModule,
+    MatListModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}
