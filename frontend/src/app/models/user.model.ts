@@ -1,14 +1,16 @@
 export interface User {
   _id: string,
-  name: string,
   email: string,
+  displayName: string,
+  phoneNumber: string,
   token: string,
 }
 
 export interface RegisterUserData {
-  name: string,
   email: string,
-  password: string
+  password: string,
+  displayName: string,
+  phoneNumber: string,
 }
 
 export interface LoginUserData {

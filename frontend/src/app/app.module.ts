@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { StoreModule } from '@ngrx/store';
+import { ActionReducer, MetaReducer, StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { NavigationComponent } from './pages/navigation/navigation.component';
 import { LoginComponent } from './pages/login/login.component';
@@ -15,6 +15,19 @@ import { MatMenuModule } from '@angular/material/menu';
 import { FlexModule } from '@angular/flex-layout';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+import { usersReducer } from './store/users.reducer';
+import { localStorageSync } from 'ngrx-store-localstorage';
+import { UsersEffects } from './store/users.effects';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+
+const localStorageSyncReducer = (reducer: ActionReducer<any>) => {
+  return localStorageSync({
+    keys: [{users: ['user']}],
+    rehydrate: true
+  })(reducer);
+}
+
+const metaReducers: MetaReducer[] = [localStorageSyncReducer];
 
 @NgModule({
   declarations: [
@@ -34,8 +47,13 @@ import { FormsModule } from '@angular/forms';
     FlexModule,
     HttpClientModule,
     FormsModule,
-    StoreModule.forRoot({}, {}),
-    EffectsModule.forRoot([]),
+    MatSnackBarModule,
+    StoreModule.forRoot({
+      users: usersReducer,
+    }, {metaReducers}),
+    EffectsModule.forRoot([
+      UsersEffects,
+    ]),
   ],
   providers: [],
   bootstrap: [AppComponent]
