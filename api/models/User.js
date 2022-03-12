@@ -4,10 +4,6 @@ const {nanoid} = require('nanoid');
 const Schema = mongoose.Schema;
 
 const UserSchema = new Schema({
-    name: {
-        type: String,
-        required: true,
-    },
     email: {
         type: String,
         required: true,
@@ -25,12 +21,17 @@ const UserSchema = new Schema({
         type: String,
         required: true,
     },
-    token: {
+    displayName: {
         type: String,
         required: true,
     },
-    avatar: {
-        type: null | String,
+    phoneNumber: {
+        type: String,
+        required: true,
+    },
+    token: {
+        type: String,
+        required: true,
     }
 });
 
@@ -38,10 +39,8 @@ const SALT_WORK_FACTOR = 10;
 
 UserSchema.pre('save', async function (next) {
     if (!this.isModified('password')) return next();
-
     const salt = await bcrypt.genSalt(SALT_WORK_FACTOR);
     const hash = await bcrypt.hash(this.password, salt);
-
     this.password = hash;
     next();
 });

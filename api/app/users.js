@@ -8,17 +8,6 @@ const path = require("path");
 const router = express.Router();
 
 
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, config.uploadPath);
-    },
-    filename: (req, file, cb) => {
-        cb(null, nanoid() + path.extname(file.originalname));
-    }
-});
-
-const upload = multer({storage});
-
 router.get('/', async (req, res, next) => {
     try {
         const users = await User.find();
@@ -29,16 +18,14 @@ router.get('/', async (req, res, next) => {
 });
 
 
-router.post('/', upload.single('avatar'), async (req, res, next) => {
+router.post('/', async (req, res, next) => {
     try {
         const userData = {
-            name: req.body.name,
             email: req.body.email,
             password: req.body.password,
-            avatar: null,
+            displayName: req.body.displayName,
+            phoneNumber: req.body.phoneNumber,
         }
-
-        if (req.file) userData.avatar = req.file.filename;
 
         const user = new User(userData);
 
